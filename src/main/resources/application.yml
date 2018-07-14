@@ -12,5 +12,6 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 kafka:
+  # donde los mensajes se publican
   topic: message.t
       

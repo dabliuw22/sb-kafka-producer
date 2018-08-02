@@ -1,3 +1,4 @@
+
 package com.leysoft.service.imple;
 
 import org.slf4j.Logger;
@@ -17,25 +18,26 @@ import com.leysoft.service.inter.SenderService;
 
 @Service
 public class SenderServiceImp implements SenderService {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SenderServiceImp.class);
-	
-	@Autowired
-	private KafkaTemplate<String, CustomMessage> kafkaTemplate;
-	
-	@Autowired
-	private ObjectMapper mapper;
-	
-	@Value(value = "${kafka.topic}")
-	private String topic;
-	
-	@Override
-	public void send(CustomMessage payload) throws JsonProcessingException {
-		String info = mapper.writeValueAsString(payload);
-		Message<CustomMessage> message = MessageBuilder.withPayload(payload)
-				.setHeader(KafkaHeaders.TOPIC, topic)
-				.setHeader("X-Custom-Header", "Set header").build();
-		LOGGER.info("send: {}", info);
-		kafkaTemplate.send(message);
-	}
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SenderServiceImp.class);
+
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    @Autowired
+    private ObjectMapper mapper;
+
+    @Value(
+            value = "${kafka.topic}")
+    private String topic;
+
+    @Override
+    public void send(CustomMessage payload) throws JsonProcessingException {
+        String info = mapper.writeValueAsString(payload);
+        Message<CustomMessage> message =
+                MessageBuilder.withPayload(payload).setHeader(KafkaHeaders.TOPIC, topic)
+                        .setHeader("X-Custom-Header", "Set header").build();
+        LOGGER.info("send: {}", info);
+        kafkaTemplate.send(message);
+    }
 }

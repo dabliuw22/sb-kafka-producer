@@ -1,3 +1,4 @@
+
 package com.leysoft.configuration;
 
 import org.springframework.context.annotation.Bean;
@@ -7,9 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class AppConfiguration {
-	
-	@Bean
-	public ObjectMapper objectMapper() {
-		return new ObjectMapper();
-	}
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 }

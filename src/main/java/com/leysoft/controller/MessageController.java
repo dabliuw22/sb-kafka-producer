@@ -1,3 +1,4 @@
+
 package com.leysoft.controller;
 
 import org.slf4j.Logger;
@@ -14,26 +15,33 @@ import com.leysoft.model.CustomMessage;
 import com.leysoft.service.inter.SenderService;
 
 @RestController
-@RequestMapping(value = {"/message"})
+@RequestMapping(
+        value = {
+            "/message"
+        })
 public class MessageController {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
-	
-	@Autowired
-	private SenderService senderService;
-	
-	@GetMapping(value = {"/{message}"})
-	public ResponseEntity<CustomMessageResponse> message(@PathVariable(name = "message") String message) {
-		CustomMessageResponse response = new CustomMessageResponse();
-		CustomMessage payload = new CustomMessage();
-		try {
-			payload.setMessage(message);
-			senderService.send(payload);
-			response.setMessage("processing message...");
-		} catch(Exception e) {
-			LOGGER.error("Error: {}", e.getMessage());
-			response.setMessage("Error...");
-		}
-		return ResponseEntity.ok(response);
-	}
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
+
+    @Autowired
+    private SenderService senderService;
+
+    @GetMapping(
+            value = {
+                "/{message}"
+            })
+    public ResponseEntity<CustomMessageResponse> message(@PathVariable(
+            name = "message") String message) {
+        CustomMessageResponse response = new CustomMessageResponse();
+        CustomMessage payload = new CustomMessage();
+        try {
+            payload.setMessage(message);
+            senderService.send(payload);
+            response.setMessage("processing message...");
+        } catch (Exception e) {
+            LOGGER.error("Error: {}", e.getMessage());
+            response.setMessage("Error...");
+        }
+        return ResponseEntity.ok(response);
+    }
 }
